@@ -3,14 +3,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
-
-@dataclass
-class Issue(object):
-    id: int
-    date: datetime
-    label: str
-
-
 issues = Path.cwd() / ".issues"
 issues.mkdir(exist_ok=True)
 ids = [
