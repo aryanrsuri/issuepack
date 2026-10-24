@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "issuepack"
+version = "0.1.0"
+description = "Pack issues into your repo"
+readme = "README"
+requires-python = ">=3.9"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENCE"]
+dependencies = []
+
+[project.scripts]
+issuepack = "issue:main"
+
+[tool.setuptools]
+py-modules = ["issue"]
