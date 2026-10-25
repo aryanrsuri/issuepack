@@ -169,16 +169,6 @@ def edit_issue(directory, args):
     return 0
 
 
-def log_issues(directory, args):
-    import subprocess
-
-    target = f".issues/{args.id}.txt" if args.id is not None else ".issues/"
-    command = ["git", "log", "--oneline", "-n", str(args.number)]
-    if args.patch:
-        command.append("--patch")
-    return subprocess.run([*command, "--", target], cwd=directory.parent).returncode
-
-
 def build_parser():
     parser = argparse.ArgumentParser(
         prog="issuepack",
@@ -190,7 +180,6 @@ def build_parser():
     for name, description, handler in (
         ("ls", "List issues.", list_issues),
         ("new", "Create an issue.", new_issue),
-        ("log", "Show Git history of issues (committed changes only).", log_issues),
         ("edit", "Edit an issue using flags or $VISUAL / $EDITOR (default: vi).", edit_issue),
         ("help", "Show help for a command.", None),
     ):
@@ -204,9 +193,6 @@ def build_parser():
     parsers["edit"].add_argument("--title", help="replace the title")
     parsers["edit"].add_argument("--status", choices=("open", "closed"), help="set the status")
     parsers["edit"].add_argument("-m", "--message", help="replace the description")
-    parsers["log"].add_argument("id", type=positive_int, nargs="?", help="show one issue's history")
-    parsers["log"].add_argument("-n", "--number", type=positive_int, default=20, help="maximum commits (default: 20)")
-    parsers["log"].add_argument("-p", "--patch", action="store_true", help="show changes")
     parsers["help"].add_argument("topic", choices=tuple(parsers), nargs="?", help="command to explain")
     return parser, parsers
 

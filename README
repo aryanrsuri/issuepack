@@ -10,7 +10,5 @@ issuepack new "Fix login redirect" -m "Return to the original page after login."
 issuepack ls
 issuepack edit 1
 issuepack edit 1 --status closed
-issuepack log
-issuepack log 1 -p
 issuepack help edit
 ```
