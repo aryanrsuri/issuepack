@@ -90,15 +90,21 @@ def save_issue(path, draft, original):
 
 def list_issues(directory, args):
     found = False
+    query = args.query.casefold() if args.query else ""
     for number in sorted(issue_ids(directory)):
-        fields, _ = read_issue(directory / f"{number}.txt", include_body=False)
+        fields, body = read_issue(directory / f"{number}.txt", include_body=bool(query))
+        if query and query not in fields["T"].casefold() and query not in body.casefold():
+            continue
         if args.status is None or fields["S"] == args.status:
             if not found:
                 print(f"{'ID':>5}  {'STATUS':6}  TITLE")
                 found = True
             print(f"{number:>5}  {fields['S']:6}  {fields['T']}")
     if not found:
-        print("No issues." if args.status is None else f"No {args.status} issues.")
+        if query:
+            print("No matching issues." if args.status is None else f"No matching {args.status} issues.")
+        else:
+            print("No issues." if args.status is None else f"No {args.status} issues.")
     return 0
 
 
@@ -186,7 +192,12 @@ def build_parser():
         command = commands.add_parser(name, help=description, description=description, allow_abbrev=False)
         command.set_defaults(handler=handler)
         parsers[name] = command
-    parsers["ls"].add_argument("--status", choices=("open", "closed"), help="filter by status")
+    parsers["ls"].add_argument(
+        "query", nargs="?", help="search titles and descriptions (case-insensitive literal text)"
+    )
+    parsers["ls"].add_argument(
+        "--status", choices=("open", "closed"), default="open", help="filter by status (default: open)"
+    )
     parsers["new"].add_argument("title", help="issue title (quote multiple words)")
     parsers["new"].add_argument("-m", "--message", help="issue description")
     parsers["edit"].add_argument("id", type=positive_int, help="issue number")

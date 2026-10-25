@@ -7,8 +7,14 @@ Pack issues into your repo.
 ```sh
 uv tool install .
 issuepack new "Fix login redirect" -m "Return to the original page after login."
-issuepack ls
+issuepack ls (--status closed)
+issuepack ls "login redirect"
+issuepack ls "original page" --status closed
 issuepack edit 1
 issuepack edit 1 --status closed
 issuepack help edit
 ```
+
+An optional search string for `ls` matches literal text in titles and descriptions,
+ignoring case. Searches show open issues by default; use `--status closed` for
+closed issues. Searches read the issue files directly without storing an index.
