@@ -152,8 +152,10 @@ def edit_issue(directory, args):
         fields["T"] = title_text(args.title)
     if args.status is not None:
         fields["S"] = args.status
-    if args.message is not None:
-        body = args.message
+    if args.message:
+        if body and not body.endswith("\n"):
+            body += "\n"
+        body += args.message
     with TemporaryDirectory(prefix=".edit-", dir=directory) as temporary:
         draft = Path(temporary) / path.name
         write_issue(draft, fields, body)
@@ -203,7 +205,7 @@ def build_parser():
     parsers["edit"].add_argument("id", type=positive_int, help="issue number")
     parsers["edit"].add_argument("--title", help="replace the title")
     parsers["edit"].add_argument("--status", choices=("open", "closed"), help="set the status")
-    parsers["edit"].add_argument("-m", "--message", help="replace the description")
+    parsers["edit"].add_argument("-m", "--message", help="append to the description")
     parsers["help"].add_argument("topic", choices=tuple(parsers), nargs="?", help="command to explain")
     return parser, parsers
 

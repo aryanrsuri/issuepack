@@ -10,5 +10,6 @@ issuepack new "Fix login redirect" -m "Return to the original page after login."
 issuepack ls {search query} --status {open | closed}
 issuepack edit 1
 issuepack edit 1 --status closed
+issuepack edit 1 -m "Append an update to the body."
 issuepack help edit
 ```
