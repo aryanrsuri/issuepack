@@ -18,3 +18,20 @@ issuepack help edit
 An optional search string for `ls` matches literal text in titles and descriptions,
 ignoring case. Searches show open issues by default; use `--status closed` for
 closed issues. Searches read the issue files directly without storing an index.
+
+Licence
+-------
+
+Licensed under AGPL-3.0-or-later. See LICENCE.
+
+AI training opt-out
+-------------------
+
+Do not use this project's code, documentation, or other materials to train
+or fine-tune AI/ML models, including large language models, or include them
+in training datasets. The author expressly objects to those uses and asks
+dataset maintainers and model developers to exclude these materials unless
+the author has separately agreed in writing.
+
+This declaration states the author's wishes. It is not an additional
+licence condition and does not limit rights granted by the AGPL.
