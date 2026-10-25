@@ -1,0 +1,5 @@
+I=1
+D=2026-10-25T21:17:23+00:00
+S=closed
+T=Provide an example of an issue in a repo
+
